@@ -8,18 +8,8 @@ export class CreateFormDto {
   @IsString()
   title: string;
   @IsNotEmpty()
-  // @IsString()
-  @ApiProperty({
-    description: 'this is form feild',
-    type: 'array',
-    items: {
-      type: 'object',
-      properties: {
-        custom: { type: 'string' },
-      },
-    },
-  })
-  formfield: string[];
+  description: string;
+  formFields: [];
   @IsNotEmpty()
   @ApiProperty({
     description: 'this is userId',

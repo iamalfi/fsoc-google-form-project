@@ -20,12 +20,17 @@ export class AuthService {
 
   async signIn(username: string, pass: string) {
     const user = await this.userService.findByEmail(username);
-    const validPassword = await bcrypt.compare(pass, user?.password);
-    if (user == null || !validPassword) {
-      return new UnauthorizedException();
+    if (user == null) {
+      return new UnauthorizedException('Email or password is wrong');
+    }
+
+    const validPassword = await bcrypt.compare(pass, user.password);
+    if (!validPassword) {
+      return new UnauthorizedException('Email or password is wrong');
     }
     const payload = { username: user.email, sub: user._id };
     return {
+      status: true,
       user,
       access_token: await this.jwtService.signAsync(payload),
     };

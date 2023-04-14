@@ -9,6 +9,7 @@ import {
   HttpStatus,
   HttpException,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { UserService } from './user.service';
 import { CreateUserDto } from './dto/create-user.dto';
@@ -30,18 +31,20 @@ import {
 export class UserController {
   constructor(private readonly userService: UserService) {}
 
-  @Post()
+  @Post('register')
   @ApiCreatedResponse({ description: 'User register succesfully!', type: User })
   @ApiBadRequestResponse({ description: 'you cannot register.Try again!' })
   @ApiBody({ type: CreateUserDto })
-  async create(@Body() createUserDto: CreateUserDto): Promise<User> {
+  async create(
+    @Body() createUserDto: CreateUserDto,
+    @Res() response,
+  ): Promise<User> {
     const user = await this.userService.create(createUserDto);
-    console.log(user);
     // if some network issue or database issue
     if (user == null) {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
-    return user;
+    return response.status(HttpStatus.CREATED).json({ status: true, user });
   }
 
   @UseGuards(AuthGuard)

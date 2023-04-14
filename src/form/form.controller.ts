@@ -9,6 +9,7 @@ import {
   HttpStatus,
   HttpException,
   UseGuards,
+  Res,
 } from '@nestjs/common';
 import { FormService } from './form.service';
 import { CreateFormDto } from './dto/create-form.dto';
@@ -24,17 +25,18 @@ import {
 } from '@nestjs/swagger';
 import { Form } from 'src/Schemas/form.schema';
 import { AuthGuard } from 'src/auth/auth.guard';
+import { response } from 'express';
 @ApiTags('Form')
 @Controller('form')
 export class FormController {
   constructor(private readonly formService: FormService) {}
   @UseGuards(AuthGuard)
-  @Post()
+  @Post('create')
   @ApiCreatedResponse({ description: 'form created succesfully!', type: Form })
   @ApiBadRequestResponse({ description: 'you cannot create.Try again!' })
   @ApiBody({ type: CreateFormDto })
   @ApiBearerAuth()
-  async create(@Body() createFormDto: CreateFormDto) {
+  async create(@Body() createFormDto: CreateFormDto, @Res() response) {
     const form = await this.formService.create(createFormDto);
     if (!form) {
       throw new HttpException(
@@ -42,7 +44,9 @@ export class FormController {
         HttpStatus.BAD_REQUEST,
       );
     }
-    return form;
+    return response
+      .status(HttpStatus.CREATED)
+      .json({ message: 'form created successfully', status: true, form });
   }
   @UseGuards(AuthGuard)
   @Get()
