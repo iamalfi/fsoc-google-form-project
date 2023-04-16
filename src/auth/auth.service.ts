@@ -21,7 +21,7 @@ export class AuthService {
   async signIn(username: string, pass: string) {
     const user = await this.userService.findByEmail(username);
     if (user == null) {
-      return new UnauthorizedException('Email or password is wrong');
+      return new UnauthorizedException('Email is not registered');
     }
 
     const validPassword = await bcrypt.compare(pass, user.password);

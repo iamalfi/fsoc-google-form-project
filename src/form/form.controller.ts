@@ -51,26 +51,30 @@ export class FormController {
   @UseGuards(AuthGuard)
   @Get()
   @ApiNotFoundResponse({ description: 'No forms found' })
-  @ApiOkResponse({ description: 'form list' })
+  @ApiOkResponse({ description: 'forms fetched successfully' })
   @ApiBearerAuth()
-  async findAll() {
+  async findAll(@Res() response) {
     const forms = await this.formService.findAll();
     if (!forms || forms.length === 0) {
       throw new HttpException('No forms found', HttpStatus.NOT_FOUND);
     }
-    return forms;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'forms fetched successfylly', forms });
   }
   @UseGuards(AuthGuard)
   @Get(':id')
   @ApiNotFoundResponse({ description: 'No forms found' })
-  @ApiOkResponse({ description: 'form details get successfully!' })
+  @ApiOkResponse({ description: 'form details fetched successfully!' })
   @ApiBearerAuth()
-  async findOne(@Param('id') id: string) {
+  async findOne(@Param('id') id: string, @Res() response) {
     const form = await this.formService.findOne(id);
     if (!form) {
       throw new HttpException('form not found', HttpStatus.NOT_FOUND);
     }
-    return form;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'form fetched successfylly', form });
   }
   @UseGuards(AuthGuard)
   @Patch(':id')
@@ -78,23 +82,31 @@ export class FormController {
   @ApiOkResponse({ description: 'form details updated successfully!' })
   @ApiBody({ type: UpdateFormDto })
   @ApiBearerAuth()
-  async update(@Param('id') id: string, @Body() updateFormDto: UpdateFormDto) {
+  async update(
+    @Param('id') id: string,
+    @Body() updateFormDto: UpdateFormDto,
+    @Res() response,
+  ) {
     const form = await this.formService.update(id, updateFormDto);
     if (!form) {
       throw new HttpException('form not found', HttpStatus.NOT_FOUND);
     }
-    return form;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'form updated successfylly', form });
   }
   @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiNotFoundResponse({ description: 'No form found' })
   @ApiOkResponse({ description: 'forms deleted successfully!' })
   @ApiBearerAuth()
-  async remove(@Param('id') id: string) {
+  async remove(@Param('id') id: string, @Res() response) {
     const form = await this.formService.remove(id);
     if (!form) {
       throw new HttpException('form not found', HttpStatus.NOT_FOUND);
     }
-    return form;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'form deleted successfylly', form });
   }
 }

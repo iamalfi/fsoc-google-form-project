@@ -1,5 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { IsMongoId, IsNotEmpty, IsString, IsUUID } from 'class-validator';
+import {
+  IsArray,
+  IsMongoId,
+  IsNotEmpty,
+  IsString,
+  IsUUID,
+} from 'class-validator';
 import mongoose from 'mongoose';
 
 export class CreateFormDto {
@@ -7,8 +13,14 @@ export class CreateFormDto {
   @IsNotEmpty()
   @IsString()
   title: string;
+
+  @ApiProperty({ description: 'this is form description', type: String })
   @IsNotEmpty()
+  @IsString()
   description: string;
+  @ApiProperty({ description: 'this is form title', type: Array })
+  @IsNotEmpty()
+  @IsArray()
   formFields: [];
   @IsNotEmpty()
   @ApiProperty({

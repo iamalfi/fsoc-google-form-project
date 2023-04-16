@@ -26,6 +26,7 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { response } from 'express';
 @ApiTags('User')
 @Controller('user')
 export class UserController {
@@ -52,24 +53,28 @@ export class UserController {
   @ApiOkResponse({ description: 'users list' })
   @ApiNotFoundResponse({ description: 'users not found' })
   @ApiBearerAuth()
-  async findAll(): Promise<User[]> {
+  async findAll(@Res() response): Promise<User[]> {
     const users = await this.userService.findAll();
     if (!users || users.length === 0) {
       throw new HttpException('No users found', HttpStatus.NOT_FOUND);
     }
-    return users;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'users fetched successfylly', users });
   }
   @UseGuards(AuthGuard)
   @Get(':id')
   @ApiOkResponse({ description: 'user details' })
   @ApiNotFoundResponse({ description: 'user not found' })
   @ApiBearerAuth()
-  async findOne(@Param('id') id: string): Promise<User> {
+  async findOne(@Param('id') id: string, @Res() response): Promise<User> {
     const user = await this.userService.findOne(id);
     if (!user) {
       throw new HttpException('user not found', HttpStatus.NOT_FOUND);
     }
-    return user;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'User fetched successfylly', user });
   }
   @UseGuards(AuthGuard)
   @Patch(':id')
@@ -80,23 +85,28 @@ export class UserController {
   async update(
     @Param('id') id: string,
     @Body() updateUserDto: UpdateUserDto,
+    @Res() response,
   ): Promise<User> {
     const user = await this.userService.update(id, updateUserDto);
     if (!user) {
       throw new HttpException('Failed to update user', HttpStatus.BAD_REQUEST);
     }
-    return user;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'User updated successfylly', user });
   }
   @UseGuards(AuthGuard)
   @Delete(':id')
   @ApiOkResponse({ description: 'user details deleted successfully!' })
   @ApiNotFoundResponse({ description: 'user not found' })
   @ApiBearerAuth()
-  async remove(@Param('id') id: string): Promise<User> {
+  async remove(@Param('id') id: string, @Res() response): Promise<User> {
     const user = await this.userService.remove(id);
     if (!user) {
       throw new HttpException('user not found', HttpStatus.NOT_FOUND);
     }
-    return user;
+    return response
+      .status(HttpStatus.OK)
+      .json({ status: true, message: 'User deleted successfylly', user });
   }
 }
