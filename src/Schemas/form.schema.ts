@@ -14,7 +14,16 @@ export class Form {
   @ApiProperty({ description: 'this is form title', type: String })
   description: string;
   @Prop()
-  @ApiProperty({ description: 'this is form title', type: Array })
+  @ApiProperty({
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        // other properties of the object go here
+      },
+    },
+  })
+  // @ApiProperty({ description: 'this is form title', type: Array })
   formFields: [];
 
   @Prop({ type: mongoose.Schema.Types.ObjectId, ref: 'User' })

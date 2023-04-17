@@ -18,7 +18,16 @@ export class CreateFormDto {
   @IsNotEmpty()
   @IsString()
   description: string;
-  @ApiProperty({ description: 'this is form title', type: Array })
+  @ApiProperty({
+    type: 'array',
+    items: {
+      type: 'object',
+      properties: {
+        // other properties of the object go here
+      },
+    },
+  })
+  // @ApiProperty({ description: 'this is form title', type: Array })
   @IsNotEmpty()
   @IsArray()
   formFields: [];

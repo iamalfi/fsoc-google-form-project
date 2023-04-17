@@ -61,7 +61,7 @@ export class ResponseFormController {
   }
   @UseGuards(AuthGuard)
   @Get()
-  @ApiNotFoundResponse({ description: 'No form found' })
+  @ApiNotFoundResponse({ description: 'No response found' })
   @ApiOkResponse({ description: 'responses fetched successfully!' })
   @ApiBearerAuth()
   async findAll(@Res() response) {
