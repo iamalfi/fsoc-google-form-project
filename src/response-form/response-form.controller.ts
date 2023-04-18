@@ -72,7 +72,7 @@ export class ResponseFormController {
     return response.status(HttpStatus.OK).json({
       status: true,
       message: 'responses fetched successfylly',
-      data: responseForms,
+      responseForms,
     });
   }
   @UseGuards(AuthGuard)
@@ -88,7 +88,7 @@ export class ResponseFormController {
     return response.status(HttpStatus.OK).json({
       status: true,
       message: 'response  fetched successfylly',
-      data: responseForm,
+      responseForm,
     });
   }
   @UseGuards(AuthGuard)
@@ -110,7 +110,7 @@ export class ResponseFormController {
     return response.status(HttpStatus.OK).json({
       status: true,
       message: 'response updated successfylly',
-      data: responseForm,
+      responseForm,
     });
   }
   @UseGuards(AuthGuard)
@@ -126,7 +126,7 @@ export class ResponseFormController {
     return response.status(HttpStatus.OK).json({
       status: true,
       message: 'response deleted successfylly',
-      data: responseForm,
+      responseForm,
     });
   }
 }

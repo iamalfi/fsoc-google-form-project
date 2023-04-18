@@ -58,13 +58,11 @@ export class FormController {
     if (!forms || forms.length === 0) {
       throw new HttpException('No forms found', HttpStatus.NOT_FOUND);
     }
-    return response
-      .status(HttpStatus.OK)
-      .json({
-        status: true,
-        message: 'forms fetched successfylly',
-        data: forms,
-      });
+    return response.status(HttpStatus.OK).json({
+      status: true,
+      message: 'forms fetched successfylly',
+      forms,
+    });
   }
   @UseGuards(AuthGuard)
   @Get(':id')
@@ -78,7 +76,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form fetched successfylly', data: form });
+      .json({ status: true, message: 'form fetched successfylly', form });
   }
   @UseGuards(AuthGuard)
   @Patch(':id')
@@ -97,7 +95,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form updated successfylly', data: form });
+      .json({ status: true, message: 'form updated successfylly', form });
   }
   @UseGuards(AuthGuard)
   @Delete(':id')
@@ -111,6 +109,6 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form deleted successfylly', data: form });
+      .json({ status: true, message: 'form deleted successfylly', form });
   }
 }
