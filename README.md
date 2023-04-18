@@ -100,20 +100,21 @@ Repository for backend cohort - Californium
 ## users
 
 ```yaml
-{
-  _id: ObjectId("88abc190ef0288abc190ef02"),
-  username: 'John Doe',
-  email: 'johndoe@mailinator.com',
-  password: 'abcd1234567',
-  'createdAt': '2021-09-17T04:25:07.803Z',
-  'updatedAt': '2021-09-17T04:25:07.803Z',
-}
+data:
+  {
+    _id: ObjectId("88abc190ef0288abc190ef02"),
+    username: 'John Doe',
+    email: 'johndoe@mailinator.com',
+    password: 'abcd1234567',
+    'createdAt': '2021-09-17T04:25:07.803Z',
+    'updatedAt': '2021-09-17T04:25:07.803Z',
+  }
 ```
 
 ## forms
 
 ```yaml
-{
+data: {
   _id: ObjectId("88abc190ef0288abc190ef02"),
 
 title: "Untitled Form",
@@ -146,7 +147,7 @@ __v: 0,
 ## Response
 
 ```yaml
-{
+data: {
   _id: ObjectId("88abc190ef0288abc190ef02"),
   answers: [{
 what is your name?: "Alfiya",

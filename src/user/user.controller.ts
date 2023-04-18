@@ -45,7 +45,9 @@ export class UserController {
     if (user == null) {
       throw new HttpException('Email already exist', HttpStatus.BAD_REQUEST);
     }
-    return response.status(HttpStatus.CREATED).json({ status: true, user });
+    return response
+      .status(HttpStatus.CREATED)
+      .json({ status: true, data: user });
   }
 
   @UseGuards(AuthGuard)
@@ -58,9 +60,11 @@ export class UserController {
     if (!users || users.length === 0) {
       throw new HttpException('No users found', HttpStatus.NOT_FOUND);
     }
-    return response
-      .status(HttpStatus.OK)
-      .json({ status: true, message: 'users fetched successfylly', users });
+    return response.status(HttpStatus.OK).json({
+      status: true,
+      message: 'users fetched successfylly',
+      data: users,
+    });
   }
   @UseGuards(AuthGuard)
   @Get(':id')
@@ -74,7 +78,7 @@ export class UserController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'User fetched successfylly', user });
+      .json({ status: true, message: 'User fetched successfylly', data: user });
   }
   @UseGuards(AuthGuard)
   @Patch(':id')
@@ -93,7 +97,7 @@ export class UserController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'User updated successfylly', user });
+      .json({ status: true, message: 'User updated successfylly', data: user });
   }
   @UseGuards(AuthGuard)
   @Delete(':id')
@@ -107,6 +111,6 @@ export class UserController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'User deleted successfylly', user });
+      .json({ status: true, message: 'User deleted successfylly', data: user });
   }
 }

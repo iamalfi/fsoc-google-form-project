@@ -46,7 +46,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.CREATED)
-      .json({ message: 'form created successfully', status: true, form });
+      .json({ message: 'form created successfully', status: true, data: form });
   }
   @UseGuards(AuthGuard)
   @Get()
@@ -60,7 +60,11 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'forms fetched successfylly', forms });
+      .json({
+        status: true,
+        message: 'forms fetched successfylly',
+        data: forms,
+      });
   }
   @UseGuards(AuthGuard)
   @Get(':id')
@@ -74,7 +78,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form fetched successfylly', form });
+      .json({ status: true, message: 'form fetched successfylly', data: form });
   }
   @UseGuards(AuthGuard)
   @Patch(':id')
@@ -93,7 +97,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form updated successfylly', form });
+      .json({ status: true, message: 'form updated successfylly', data: form });
   }
   @UseGuards(AuthGuard)
   @Delete(':id')
@@ -107,6 +111,6 @@ export class FormController {
     }
     return response
       .status(HttpStatus.OK)
-      .json({ status: true, message: 'form deleted successfylly', form });
+      .json({ status: true, message: 'form deleted successfylly', data: form });
   }
 }
