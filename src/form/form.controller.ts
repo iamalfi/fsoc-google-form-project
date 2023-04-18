@@ -46,7 +46,7 @@ export class FormController {
     }
     return response
       .status(HttpStatus.CREATED)
-      .json({ message: 'form created successfully', status: true, data: form });
+      .json({ message: 'form created successfully', status: true, form });
   }
   @UseGuards(AuthGuard)
   @Get()
