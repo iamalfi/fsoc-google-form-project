@@ -6,7 +6,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export type ResponseFormDocument = mongoose.HydratedDocument<ResponseForm>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class ResponseForm {
   @Prop()
   @ApiProperty({ description: 'An array of answers', type: Array })

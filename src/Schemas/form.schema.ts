@@ -5,7 +5,7 @@ import { ApiProperty } from '@nestjs/swagger';
 
 export type formDocument = HydratedDocument<Form>;
 
-@Schema()
+@Schema({ timestamps: true })
 export class Form {
   @ApiProperty({ description: 'this is form title', type: String })
   @Prop()
