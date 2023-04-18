@@ -1,3 +1,165 @@
+# Californium
+
+Repository for backend cohort - Californium
+
+## Fsoc project google-form
+
+## Phase I
+
+### Models
+
+- User Model
+
+```yaml
+{
+  username: { mandatory, string },
+  email: { mandatory, valid email, string, unique },
+  password: { mandatory, string },
+}
+```
+
+- Form Model
+
+```yaml
+{
+  title: { mandatory, string },
+  description: { mandatory, string },
+  formFields: { mandatory, Array },
+  userId: { mandatory, ObjectId },
+}
+```
+
+- Response Model
+
+```yaml
+{
+  answers: { mandatory, Array },
+  userId: { mandatory, ObjectId },
+  formId: { mandatory, ObjectId },
+}
+```
+
+### User APIs /user
+
+- Create an user -
+- Create a user document from request body.
+  `Endpoint: BASE_URL/user`
+
+  ### POST /register
+
+- Create a user -
+- Create a user document from request body.
+- Return HTTP status 201 on a succesful user creation. Also return the user document. The response should be a JSON object like [this](#successful-response-structure)
+- Return HTTP status 400 if no params or invalid params received in request body. The response should be a JSON object like [this](#error-response-structure)
+
+### POST /login
+
+- Allow an user to login with their email and password.
+- On a successful login attempt return a JWT token contatining the userId. The response should be a JSON object like [this](#successful-response-structure)
+- If the credentials are incorrect return a suitable error message with a valid HTTP status code. The response should be a JSON object like [this](#error-response-structure)
+
+## form API
+
+### POST /form
+
+- Create a form document from request body. Get userId in request body only.
+- Make sure the userId is a valid userId by checking the user exist in the users collection.
+- Return HTTP status 201 on a succesful form creation. Also return the form document. The response should be a JSON object like [this](#successful-response-structure)
+- Return HTTP status 400 for an invalid request with a response body like [this](#error-response-structure)
+
+## Response API
+
+### POST /response-form
+
+- Create a response document from request body. Get userId and formId in request body only.
+- Make sure the userId and formId is a valid userId and formId by checking the user exist in the users collection.
+- Return HTTP status 201 on a succesful response creation. Also return the response document. The response should be a JSON object like [this](#successful-response-structure)
+
+- Return HTTP status 400 for an invalid request with a response body like [this](#error-response-structure)
+
+### Authentication
+
+- Make sure all the routes are protected accept register login.
+
+## Response
+
+### Successful Response structure
+
+```yaml
+{ status: true, message: 'Success', data: {} }
+```
+
+### Error Response structure
+
+```yaml
+{ status: false, message: '' }
+```
+
+## Collections
+
+## users
+
+```yaml
+{
+  _id: ObjectId("88abc190ef0288abc190ef02"),
+  username: 'John Doe',
+  email: 'johndoe@mailinator.com',
+  password: 'abcd1234567',
+  'createdAt': '2021-09-17T04:25:07.803Z',
+  'updatedAt': '2021-09-17T04:25:07.803Z',
+}
+```
+
+## forms
+
+```yaml
+{
+  _id: ObjectId("88abc190ef0288abc190ef02"),
+
+title: "Untitled Form",
+description: "Form Description",
+
+formFields:[
+{id
+0
+name: "0",
+label: "what is your name?",
+required: false,
+question_type: "short_answer",
+list: []},
+
+{name: "question_1",
+label: "what is your age",
+required: false,
+question_type: "multichoice",
+
+list: ["20","22","23","none of the above"]
+}],
+userId: ObjectId('643d5e02042e2e98f43f68a0')
+__v: 0,
+  'createdAt': '2021-09-17T04:25:07.803Z',
+  'updatedAt': '2021-09-17T04:25:07.803Z',
+
+}
+```
+
+## Response
+
+```yaml
+{
+  _id: ObjectId("88abc190ef0288abc190ef02"),
+  answers: [{
+what is your name?: "Alfiya",
+what is your age: "none of the above",
+what is your favourite colour ?: "all sober colours"}],
+userId: ObjectId('643d5e02042e2e98f43f68a0'),
+formId: ObjectId('643d5e02042e2e98f43f68a0')
+__v: 0,
+  'createdAt': '2021-09-17T04:25:07.803Z',
+  'updatedAt': '2021-09-17T04:25:07.803Z',
+}
+```
+
 <p align="center">
   <a href="http://nestjs.com/" target="blank"><img src="https://nestjs.com/img/logo-small.svg" width="200" alt="Nest Logo" /></a>
 </p>
