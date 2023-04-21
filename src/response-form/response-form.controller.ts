@@ -56,7 +56,7 @@ export class ResponseFormController {
     response.status(HttpStatus.CREATED).json({
       status: true,
       message: 'response saved successfully',
-      data: responseForm,
+      responseForm,
     });
   }
   @UseGuards(AuthGuard)
