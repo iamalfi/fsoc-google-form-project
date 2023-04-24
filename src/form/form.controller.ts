@@ -10,6 +10,7 @@ import {
   HttpException,
   UseGuards,
   Res,
+  Request,
 } from '@nestjs/common';
 import { FormService } from './form.service';
 import { CreateFormDto } from './dto/create-form.dto';
@@ -53,8 +54,8 @@ export class FormController {
   @ApiNotFoundResponse({ description: 'No forms found' })
   @ApiOkResponse({ description: 'forms fetched successfully' })
   @ApiBearerAuth()
-  async findAll(@Res() response) {
-    const forms = await this.formService.findAll();
+  async findAll(@Res() response, @Request() req) {
+    const forms = await this.formService.findAll(req);
     if (!forms || forms.length === 0) {
       throw new HttpException('No forms found', HttpStatus.NOT_FOUND);
     }

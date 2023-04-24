@@ -16,8 +16,8 @@ export class FormService {
     return form;
   }
 
-  async findAll() {
-    const forms = await this.formModel.find();
+  async findAll(req: any) {
+    const forms = await this.formModel.find({ userId: req.user.sub });
     if (forms.length == 0) {
       return null;
     }
